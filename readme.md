@@ -32,6 +32,10 @@ Likewise, the prefix for the timestamp tag (by default "deploy-YYYYMMDD-hh-mm-ss
   
   - `set :latest_deploy_timestamp_tag_prefix, "your_timestamp_tag_prefix_here"`
 
+You can also disable the timestamp prefix:
+
+  - `set :latest_deploy_timestamp_tag_prefix, false`
+
 You can also override the timestamp format:
 
   - `set :latest_deploy_timestamp_format, "%Y.%m.%d-%H:%M:%S"`

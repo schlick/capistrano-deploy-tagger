@@ -19,7 +19,7 @@ Capistrano::Configuration.instance(:must_exist).load do
         update_timestamp              = fetch(:update_deploy_timestamp_tags) rescue true
 
         tag_name                      = fetch(:latest_deploy_tag)                  rescue "inproduction"
-        deploy_timestamp_tag_prefix   = fetch(:latest_deploy_timestamp_tag_prefix) rescue "deploy"
+        deploy_timestamp_tag_prefix   = fetch(:latest_deploy_timestamp_tag_prefix) rescue "deploy"  # or set to false to disable
         deploy_timestamp_format       = fetch(:latest_deploy_timestamp_format)     rescue "%Y%m%d-%H%M-%S"
 
         # keep_deploy_tags = fetch(:keep_deploy_tags) rescue 10
@@ -45,7 +45,12 @@ Capistrano::Configuration.instance(:must_exist).load do
             # end
             
             # Create a tag for the current deploy with time and date, we'll keep a few of these for history.
-            deploy_tag_string = "#{deploy_timestamp_tag_prefix}-#{Time.now.strftime(deploy_timestamp_format)}"
+            deploy_timestamp = Time.now.strftime(deploy_timestamp_format)
+            deploy_tag_string = if deploy_timestamp_tag_prefix && !deploy_timestamp_tag_prefix.empty?
+                                  [deploy_timestamp_tag_prefix, deploy_timestamp].join('-')
+                                else
+                                  deploy_timestamp
+                                end
             git "tag #{deploy_tag_string} #{latest_revision}"
 
             # Remove older deploy tags, ensuring we keep at least ':keep_deploy_tags' of the more recent deploy tags.
