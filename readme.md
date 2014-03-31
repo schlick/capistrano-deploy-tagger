@@ -32,6 +32,10 @@ Likewise, the prefix for the timestamp tag (by default "deploy-YYYYMMDD-hh-mm-ss
   
   - `set :latest_deploy_timestamp_tag_prefix, "your_timestamp_tag_prefix_here"`
 
+You can also override the timestamp format:
+
+  - `set :latest_deploy_timestamp_format, "%Y.%m.%d-%H:%M:%S"`
+
 You can also disable updating tags, again globally or for specific cap tasks, by setting the following in your `deploy.rb`:
 
   - `set :update_deploy_tags, false`
